@@ -1,12 +1,14 @@
 import urllib.request
 import json
-document_list_url = 'https://api.data.gov:443/regulations/v3/documents.json?api_key=5fPcNxPyfzoIa0e2LXP315n7Uo18fQPLxLrrBwJz&dktid=BIS-2018-0006'
-base_doc_url = 'https://api.data.gov:443/regulations/v3/document.json?api_key=5fPcNxPyfzoIa0e2LXP315n7Uo18fQPLxLrrBwJz&documentId='
+
+# (Mostly) constants
 api_key = '5fPcNxPyfzoIa0e2LXP315n7Uo18fQPLxLrrBwJz'
 base_url = 'https://api.data.gov:443/regulations/v3/'
 docket_id = 'BIS-2018-0006'
 
 # Returns url for regulations.gov api call
+# Subpath determines where in the api we go
+# Attach_num is int or string, all others are string
 def create_url(subpath, key=api_key, dktid=None, document_id=None, attach_num=None, content_type=None):
     ret = base_url
     ret += subpath
