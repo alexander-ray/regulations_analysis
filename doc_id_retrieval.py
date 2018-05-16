@@ -1,16 +1,15 @@
-from urllib.request import urlopen
-from urllib.error import HTTPError
-import json
-import pandas as pd
+import http.client
 
-tmp_url = 'https://www.regulations.gov/exportdocket?docketId=BIS-2018-0006'
+conn = http.client.HTTPSConnection("www.regulations.gov")
 
-try:
-    response = urlopen(tmp_url)
-    content = response.read()
-except HTTPError as e:
-    if e.getcode() == 500:
-        content = e.read()
-        print(content)
-    else:
-        raise
+headers = {
+    'cache-control': "no-cache",
+    'postman-token': "81936c95-6fc7-ea22-a9be-7abe7c45cab8"
+    }
+
+conn.request("GET", "/exportdocket?docketId=BIS-2018-0006", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
